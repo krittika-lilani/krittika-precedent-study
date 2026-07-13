@@ -150,3 +150,117 @@ tr:last-child td{
     font-size:24px;
     color:#b24a3b;
 }
+
+/* Actor Network Diagram */
+
+.actor-network-page{
+    max-width:1120px;
+}
+
+.actor-network-page h1{
+    font-size:2.9rem;
+}
+
+.actor-network-page h2{
+    font-size:1.75rem;
+}
+
+.actor-network-introduction{
+    max-width:860px;
+}
+
+.actor-network-figure{
+    max-width:1120px;
+    margin:55px auto 0;
+}
+
+.actor-network-diagram{
+    display:block;
+    width:100%;
+    height:auto;
+    background:transparent;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.network-node rect{
+    fill:transparent;
+    stroke:#fe0100;
+    stroke-width:1.5px;
+    rx:1px;
+    ry:1px;
+    vector-effect:non-scaling-stroke;
+}
+
+.network-node--gcd rect{
+    stroke-width:1.5px;
+    fill:#fe0100;
+}
+
+.network-node--gcd .network-primary,
+.network-node--gcd .network-secondary,
+.network-node--gcd .network-gcd-abbreviation{
+    fill:#ffffff;
+}
+
+.network-connections line{
+    fill:none;
+    stroke:#fe0100;
+    stroke-width:1.5px;
+    stroke-linecap:square;
+    vector-effect:non-scaling-stroke;
+}
+
+.network-connection--secondary{
+    stroke-dasharray:7 7;
+}
+
+.network-category{
+    fill:#756f68;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:3px;
+}
+
+.network-primary{
+    fill:#171615;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.4px;
+}
+
+.network-primary--gcd{
+    font-size:20px;
+}
+
+.network-gcd-abbreviation{
+    fill:#171615;
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:5px;
+}
+
+.network-secondary{
+    fill:#4c4741;
+    font-size:12px;
+    font-weight:400;
+}
+
+.actor-network-figure figcaption{
+    max-width:700px;
+    margin:24px auto 0;
+    color:#514c46;
+    font-size:0.9rem;
+}
+
+@media (max-width:700px){
+    .actor-network-figure{
+        margin-top:40px;
+        overflow-x:auto;
+        padding-bottom:12px;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .actor-network-diagram{
+        min-width:900px;
+    }
+}
