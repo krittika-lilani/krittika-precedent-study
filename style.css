@@ -1,108 +1,264 @@
+:root{
+    --paper:#ffffff;
+    --ink:#1e1d1a;
+    --muted:#706c65;
+    --rule:#d9d6ce;
+    --accent:#fe0100;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    background:var(--paper);
+}
+
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    max-width:1120px;
-    margin:45px auto;
-    padding:0 34px;
-    line-height:1.7;
-    color:#4c4741;
-    background:#f4efe6;
+    font-family:Arial, Helvetica, sans-serif;
+    max-width:1360px;
+    margin:0 auto;
+    padding:30px clamp(40px, 5.5vw, 82px) 90px;
+    line-height:1.65;
+    color:var(--ink);
+    background:var(--paper);
 }
 
 /* Navigation */
 
 nav{
-    margin-bottom:55px;
-    padding-bottom:16px;
-    border-bottom:2px solid #b24a3b;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 27px;
+    margin-bottom:72px;
+    padding:0 0 15px;
+    border-bottom:1px solid var(--rule);
 }
 
 nav a{
-    text-decoration:none;
-    color:#2f2d2a;
-    font-size:1.15rem;
+    margin:0;
+    color:var(--ink);
+    font-size:0.68rem;
     font-weight:700;
-    margin-right:34px;
+    letter-spacing:0.12em;
+    line-height:1.4;
+    text-decoration:none;
+    text-transform:uppercase;
 }
 
-nav a:hover{
-    color:#b24a3b;
+nav a:hover,
+nav a:focus-visible{
+    color:var(--accent);
 }
 
 /* Headings */
 
 h1{
-    font-size:2.45rem;
-    line-height:1.15;
-    color:#171615;
-    margin-bottom:40px;
-    font-weight:700;
+    max-width:780px;
+    margin:0 0 45px;
+    color:var(--ink);
+    font-size:clamp(2rem, 3.2vw, 3rem);
+    font-weight:600;
+    letter-spacing:-0.035em;
+    line-height:1.04;
 }
 
 h2,
 h3,
 h4{
-    font-size:1.15rem;
-    color:#2a2724;
-    margin-top:38px;
-    margin-bottom:18px;
+    max-width:780px;
+    margin:64px 0 22px;
+    color:var(--ink);
+    font-size:0.72rem;
     font-weight:700;
+    letter-spacing:0.16em;
+    line-height:1.4;
+    text-transform:uppercase;
+}
+
+h3{
+    margin-top:48px;
 }
 
 /* Text */
 
 p{
-    max-width:900px;
-    color:#514c46;
-    margin-bottom:22px;
-    font-size:1rem;
+    max-width:780px;
+    margin:0 0 20px;
+    color:#484641;
+    font-size:0.9rem;
+    line-height:1.72;
 }
 
 em{
-    color:#2a2724;
+    color:var(--ink);
 }
 
 /* Links */
 
 a{
-    color:#9d3f32;
+    color:#a51610;
 }
 
 a:hover{
-    color:#6f291f;
+    color:var(--accent);
+}
+
+/* Homepage map field */
+
+.home-study-layout{
+    display:grid;
+    grid-template-columns:minmax(0, 0.92fr) minmax(460px, 1.08fr);
+    column-gap:clamp(46px, 6vw, 86px);
+    align-items:start;
+}
+
+.home-hero{
+    grid-column:1;
+    margin:0 0 46px;
+}
+
+.home-page nav{
+    margin-bottom:44px;
+}
+
+.home-hero-visual{
+    position:sticky;
+    top:30px;
+    grid-column:2;
+    grid-row:1 / span 2;
+    align-self:start;
+    width:100%;
+    height:calc(100vh - 150px);
+    min-height:640px;
+    max-height:900px;
+    margin:0;
+    overflow:hidden;
+}
+
+.home-hero-map{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center top;
+    transform:scale(1.35);
+    transform-origin:center top;
+}
+
+.home-hero-copy{
+    margin-top:0;
+    padding-top:18px;
+    border-top:2px solid var(--accent);
+}
+
+.home-hero-copy h1{
+    max-width:390px;
+    margin-bottom:22px;
+    font-size:clamp(1.55rem, 2.1vw, 2.1rem);
+    line-height:1.07;
+}
+
+.eyebrow,
+.project-credit{
+    color:var(--muted);
+    font-size:0.66rem;
+    font-weight:700;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+}
+
+.eyebrow{
+    margin-bottom:28px;
+}
+
+.project-credit{
+    line-height:1.5;
+}
+
+.home-study-content{
+    grid-column:1;
+    min-width:0;
+}
+
+.home-study-content > h2:first-child{
+    margin-top:0;
+}
+
+.home-study-content h2{
+    margin-top:48px;
+}
+
+.home-study-content table{
+    margin-bottom:54px;
+    font-size:0.7rem;
+}
+
+.home-study-content th,
+.home-study-content td{
+    padding:10px 8px;
+}
+
+.home-study-content .bibliography p{
+    font-size:0.79rem;
+}
+
+/* Reading pages */
+
+.analysis-page > h1,
+.analysis-page > h2,
+.analysis-page > h3,
+.analysis-page > p{
+    margin-left:clamp(0px, 7vw, 105px);
+}
+
+.analysis-page > h1{
+    margin-top:10px;
+    margin-bottom:65px;
+}
+
+.analysis-page > h2:first-of-type{
+    margin-top:0;
 }
 
 /* Tables */
 
 table{
     width:100%;
-    border-collapse:separate;
-    border-spacing:0;
-    margin:30px 0 50px 0;
-    background:#fffaf1;
-    box-shadow:0 6px 18px rgba(45,35,25,0.10);
-    border:1px solid #cdbfaf;
-    border-radius:8px;
-    overflow:hidden;
+    margin:25px 0 75px;
+    border-collapse:collapse;
+    background:transparent;
+    border-top:1px solid #aaa69e;
+    border-bottom:1px solid #aaa69e;
+    font-size:0.78rem;
+    line-height:1.55;
 }
 
 th{
-    background:#e4d6c4;
-    color:#26231f;
+    color:var(--ink);
+    font-size:0.64rem;
     font-weight:700;
+    letter-spacing:0.1em;
+    text-align:left;
+    text-transform:uppercase;
 }
 
 th,
 td{
-    border-right:1px solid #cdbfaf;
-    border-bottom:1px solid #cdbfaf;
-    padding:15px 18px;
+    padding:13px 15px;
     vertical-align:top;
-    color:#4c4741;
+    color:#47443f;
+    border-bottom:1px solid var(--rule);
+}
+
+th:first-child,
+td:first-child{
+    padding-left:0;
 }
 
 th:last-child,
 td:last-child{
-    border-right:none;
+    padding-right:0;
 }
 
 tr:last-child td{
@@ -111,44 +267,51 @@ tr:last-child td{
 
 /* Bibliography */
 
+.bibliography{
+    max-width:900px;
+}
+
 .bibliography p{
-    margin-left:40px;
-    text-indent:-40px;
-    margin-bottom:16px;
+    margin-left:36px;
+    text-indent:-36px;
+    margin-bottom:14px;
+    font-size:0.82rem;
 }
 
 /* Ontology Diagram */
 
 .diagram{
-    border:1px solid #cdbfaf;
-    background:#fffaf1;
-    padding:32px;
-    margin:42px 0;
-    box-shadow:0 6px 18px rgba(45,35,25,0.10);
-    border-radius:8px;
+    max-width:820px;
+    margin:55px 0 75px clamp(0px, 7vw, 105px);
+    padding:34px;
+    background:transparent;
+    border:1px solid var(--rule);
 }
 
 .diagram-box{
-    border:1px solid #b24a3b;
-    padding:16px;
-    width:380px;
+    width:min(100%, 380px);
     margin:16px auto;
+    padding:15px;
+    color:#484641;
     text-align:center;
-    background:#f8f0e6;
-    color:#4c4741;
-    border-radius:6px;
+    background:transparent;
+    border:1px solid var(--accent);
+    border-radius:1px;
 }
 
 .diagram-title{
-    font-weight:bold;
-    margin-bottom:10px;
-    color:#171615;
+    margin-bottom:9px;
+    color:var(--ink);
+    font-size:0.72rem;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
 }
 
 .arrow{
+    color:var(--accent);
+    font-size:20px;
     text-align:center;
-    font-size:24px;
-    color:#b24a3b;
 }
 
 /* Actor Network Diagram */
@@ -275,7 +438,79 @@ tr:last-child td{
     text-align:center;
 }
 
+@media (max-width:860px){
+    .home-study-layout{
+        grid-template-columns:1fr;
+    }
+
+    .home-hero,
+    .home-hero-visual,
+    .home-study-content{
+        grid-column:1;
+        grid-row:auto;
+    }
+
+    .home-hero{
+        margin-bottom:30px;
+    }
+
+    .home-hero-visual{
+        position:static;
+        width:100%;
+        height:auto;
+        min-height:0;
+        max-height:none;
+        margin-bottom:48px;
+        overflow:visible;
+    }
+
+    .home-hero-map{
+        width:100%;
+        height:auto;
+        transform:none;
+    }
+}
+
 @media (max-width:700px){
+    body{
+        padding:18px 20px 65px;
+    }
+
+    nav{
+        gap:9px 18px;
+        margin-bottom:48px;
+    }
+
+    .home-hero{
+        margin-bottom:30px;
+    }
+
+    .home-hero-copy{
+        margin-top:0;
+    }
+
+    .analysis-page > h1,
+    .analysis-page > h2,
+    .analysis-page > h3,
+    .analysis-page > p{
+        margin-left:0;
+    }
+
+    .analysis-page > h1{
+        margin-bottom:48px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:normal;
+    }
+
+    .diagram{
+        margin-left:0;
+        padding:22px;
+    }
+
     .actor-network-figure{
         margin-top:40px;
         overflow-x:auto;
