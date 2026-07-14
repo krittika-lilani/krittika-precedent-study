@@ -16,9 +16,9 @@ html{
 
 body{
     font-family:Arial, Helvetica, sans-serif;
-    max-width:1360px;
+    max-width:1320px;
     margin:0 auto;
-    padding:30px clamp(40px, 5.5vw, 82px) 90px;
+    padding:30px clamp(48px, 7vw, 96px) 90px;
     line-height:1.65;
     color:var(--ink);
     background:var(--paper);
@@ -29,10 +29,11 @@ body{
 nav{
     display:flex;
     flex-wrap:wrap;
+    justify-content:space-between;
     gap:10px 27px;
     margin-bottom:72px;
     padding:0 0 15px;
-    border-bottom:1px solid var(--rule);
+    border-bottom:2px solid var(--accent);
 }
 
 nav a{
@@ -108,18 +109,18 @@ a:hover{
 
 .home-study-layout{
     display:grid;
-    grid-template-columns:minmax(0, 0.92fr) minmax(460px, 1.08fr);
-    column-gap:clamp(46px, 6vw, 86px);
+    grid-template-columns:minmax(0, 0.9fr) minmax(460px, 1.1fr);
+    column-gap:clamp(42px, 5vw, 70px);
     align-items:start;
 }
 
 .home-hero{
     grid-column:1;
-    margin:0 0 46px;
+    margin:0 0 34px;
 }
 
 .home-page nav{
-    margin-bottom:44px;
+    margin-bottom:38px;
 }
 
 .home-hero-visual{
@@ -128,28 +129,28 @@ a:hover{
     grid-column:2;
     grid-row:1 / span 2;
     align-self:start;
-    width:100%;
-    height:calc(100vh - 150px);
-    min-height:640px;
-    max-height:900px;
-    margin:0;
-    overflow:hidden;
+    display:flex;
+    justify-content:flex-end;
+    width:calc(100% + clamp(70px, 7vw, 120px));
+    height:calc(100vh - 105px);
+    min-height:720px;
+    max-height:none;
+    margin:0 clamp(-120px, -7vw, -70px) 0 0;
+    overflow:visible;
 }
 
 .home-hero-map{
     display:block;
-    width:100%;
+    flex:0 0 auto;
+    width:auto;
+    max-width:none;
     height:100%;
-    object-fit:contain;
-    object-position:center top;
-    transform:scale(1.35);
-    transform-origin:center top;
 }
 
 .home-hero-copy{
     margin-top:0;
-    padding-top:18px;
-    border-top:2px solid var(--accent);
+    padding-top:0;
+    border-top:0;
 }
 
 .home-hero-copy h1{
@@ -169,7 +170,7 @@ a:hover{
 }
 
 .eyebrow{
-    margin-bottom:28px;
+    margin-bottom:22px;
 }
 
 .project-credit{
@@ -439,6 +440,10 @@ tr:last-child td{
 }
 
 @media (max-width:860px){
+    nav{
+        justify-content:flex-start;
+    }
+
     .home-study-layout{
         grid-template-columns:1fr;
     }
@@ -456,16 +461,18 @@ tr:last-child td{
 
     .home-hero-visual{
         position:static;
+        display:block;
         width:100%;
         height:auto;
         min-height:0;
         max-height:none;
-        margin-bottom:48px;
+        margin:0 0 48px;
         overflow:visible;
     }
 
     .home-hero-map{
         width:100%;
+        max-width:100%;
         height:auto;
         transform:none;
     }
