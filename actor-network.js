@@ -12,121 +12,96 @@
 
     const width = 1600;
     const height = 900;
-    const red = "#fe0100";
+    const categoryColors = new Map([
+        ["Central database", "#fe0100"],
+        ["Human actors", "#355070"],
+        ["Source data", "#2a9d8f"],
+        ["Computational methods", "#457b9d"],
+        ["Analysis", "#b7791f"],
+        ["Outputs", "#9c6644"],
+        ["Audiences", "#6d597a"]
+    ]);
+    const relationshipColors = new Map([
+        ["input", "#b24a3b"],
+        ["analysis", "#457b9d"],
+        ["production", "#b7791f"],
+        ["communication", "#6d597a"]
+    ]);
 
-    // Target positions preserve the restrained constellation while the forces
-    // introduce the organic spacing of a force-directed diagram.
-    const nodes = [
-        {
-            id: "gcd",
-            title: ["GENERAL CARTOGRAPHIC", "DATABASE"],
-            abbreviation: "GCD",
-            subtitle: ["Spatial evidence and cartographic interface"],
-            width: 300,
-            height: 220,
-            targetX: 800,
-            targetY: 450,
-            central: true,
-            fx: 800,
-            fy: 450
-        },
-        {
-            id: "forensic-architecture",
-            title: ["FORENSIC ARCHITECTURE"],
-            subtitle: ["Researchers · Architects", "OSINT analysts · Legal researchers"],
-            width: 320,
-            height: 130,
-            targetX: 430,
-            targetY: 175
-        },
-        {
-            id: "source-data",
-            title: ["SOURCE DATA"],
-            subtitle: ["Satellite imagery · Open-source media", "Witness testimony · Humanitarian data"],
-            width: 300,
-            height: 130,
-            targetX: 185,
-            targetY: 430
-        },
-        {
-            id: "verification",
-            title: ["VERIFICATION"],
-            subtitle: ["Geolocation · Chronolocation", "Cross-referencing"],
-            width: 250,
-            height: 120,
-            targetX: 810,
-            targetY: 125
-        },
-        {
-            id: "gis",
-            title: ["GIS + SPATIAL ANALYSIS"],
-            subtitle: ["Mapping · Classification", "Spatial comparison"],
-            width: 300,
-            height: 120,
-            targetX: 1200,
-            targetY: 175
-        },
-        {
-            id: "verified-incidents",
-            title: ["VERIFIED INCIDENTS"],
-            subtitle: [],
-            width: 210,
-            height: 90,
-            targetX: 1090,
-            targetY: 405
-        },
-        {
-            id: "pattern-recognition",
-            title: ["PATTERN RECOGNITION"],
-            subtitle: [],
-            width: 280,
-            height: 100,
-            targetX: 1230,
-            targetY: 575
-        },
-        {
-            id: "interactive-database",
-            title: ["INTERACTIVE DATABASE"],
-            subtitle: [],
-            width: 280,
-            height: 100,
-            targetX: 610,
-            targetY: 715
-        },
-        {
-            id: "reports",
-            title: ["REPORTS + LEGAL EVIDENCE"],
-            subtitle: [],
-            width: 330,
-            height: 95,
-            targetX: 1165,
-            targetY: 760
-        },
-        {
-            id: "audiences",
-            title: ["AUDIENCES"],
-            subtitle: ["Courts · Human-rights organisations", "Researchers · Journalists · Public"],
-            width: 260,
-            height: 140,
-            targetX: 1450,
-            targetY: 700
-        }
-    ].map((node) => ({ ...node, x: node.targetX, y: node.targetY }));
+    function parseNode(row) {
+        const node = {
+            id: row.id,
+            title: JSON.parse(row.title),
+            subtitle: JSON.parse(row.subtitle),
+            width: Number(row.width),
+            height: Number(row.height),
+            targetX: Number(row.targetX),
+            targetY: Number(row.targetY),
+            x: Number(row.x),
+            y: Number(row.y),
+            category: row.category,
+            description: row.description
+        };
 
-    const links = [
-        { source: "source-data", target: "forensic-architecture" },
-        { source: "forensic-architecture", target: "gcd" },
-        { source: "verification", target: "gcd" },
-        { source: "gis", target: "gcd" },
-        { source: "gcd", target: "verified-incidents" },
-        { source: "verified-incidents", target: "pattern-recognition" },
-        { source: "gcd", target: "interactive-database" },
-        { source: "pattern-recognition", target: "reports" },
-        { source: "interactive-database", target: "audiences" },
-        { source: "reports", target: "audiences" },
-        { source: "forensic-architecture", target: "verification", secondary: true },
-        { source: "gis", target: "pattern-recognition", secondary: true }
-    ];
+        if (row.abbreviation) node.abbreviation = row.abbreviation;
+        if (row.central) node.central = row.central === "true";
+        if (row.fx) node.fx = Number(row.fx);
+        if (row.fy) node.fy = Number(row.fy);
+
+        return node;
+    }
+
+    function parseLink(row) {
+        const link = {
+            source: row.source,
+            target: row.target
+        };
+
+        if (row.secondary) link.secondary = row.secondary === "true";
+        if (row.relationship) link.relationship = row.relationship;
+        if (row.relationship_type) link.relationshipType = row.relationship_type;
+
+        return link;
+    }
+
+    function renderNetwork(nodes, links) {
+
+    const tooltip = d3.select(container)
+        .append("div")
+        .attr("class", "network-tooltip")
+        .attr("role", "tooltip")
+        .attr("aria-hidden", "true");
+
+    function positionTooltip(event) {
+        const bounds = container.getBoundingClientRect();
+        const tooltipNode = tooltip.node();
+        const proposedX = event.clientX - bounds.left + 12;
+        const proposedY = event.clientY - bounds.top + 12;
+        const x = Math.max(8, Math.min(proposedX, bounds.width - tooltipNode.offsetWidth - 8));
+        const y = Math.max(8, Math.min(proposedY, bounds.height - tooltipNode.offsetHeight - 8));
+
+        tooltip
+            .style("left", `${x}px`)
+            .style("top", `${y}px`);
+    }
+
+    function showNodeTooltip(event, d) {
+        tooltip.html("");
+        tooltip.append("strong").text(d.title.join(" "));
+        tooltip.append("span").attr("class", "network-tooltip-category").text(d.category);
+        tooltip.append("span").text(d.description);
+        tooltip
+            .attr("aria-hidden", "false")
+            .classed("is-visible", true);
+
+        positionTooltip(event);
+    }
+
+    function hideTooltip() {
+        tooltip
+            .attr("aria-hidden", "true")
+            .classed("is-visible", false);
+    }
 
     const svg = d3.select(container)
         .append("svg")
@@ -134,6 +109,23 @@
         .attr("preserveAspectRatio", "xMidYMid meet")
         .attr("role", "img")
         .attr("aria-labelledby", "d3-network-title d3-network-description");
+
+    const definitions = svg.append("defs");
+
+    relationshipColors.forEach((color, relationshipType) => {
+        definitions.append("marker")
+            .attr("id", `network-arrowhead-${relationshipType}`)
+            .attr("viewBox", "0 -4 8 8")
+            .attr("refX", 8)
+            .attr("refY", 0)
+            .attr("markerWidth", 8)
+            .attr("markerHeight", 8)
+            .attr("markerUnits", "userSpaceOnUse")
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M0,-4L8,0L0,4Z")
+            .attr("fill", color);
+    });
 
     svg.append("title")
         .attr("id", "d3-network-title")
@@ -143,28 +135,105 @@
         .attr("id", "d3-network-description")
         .text("A force-directed network connecting ten actors, sources, methods, analyses, outputs, and audiences around the General Cartographic Database.");
 
-    const categoryLabels = [
-        { label: "HUMAN ACTORS", x: 280, y: 55 },
-        { label: "DATA + METHODS", x: 55, y: 300 },
-        { label: "ANALYSIS", x: 1025, y: 320 },
-        { label: "OUTPUTS + AUDIENCES", x: 455, y: 620 }
-    ];
+    const legendCategories = Array.from(categoryColors)
+        .filter(([category]) => nodes.some((nodeData) => nodeData.category === category));
 
-    svg.append("g")
-        .selectAll("text")
-        .data(categoryLabels)
-        .join("text")
-        .attr("class", "network-category")
-        .attr("x", (d) => d.x)
-        .attr("y", (d) => d.y)
-        .text((d) => d.label);
+    const legend = svg.append("g")
+        .attr("class", "network-legend")
+        .attr("transform", "translate(55,650)");
+
+    legend.append("text")
+        .attr("class", "network-legend-title")
+        .attr("x", 0)
+        .attr("y", 0)
+        .text("CATEGORIES");
+
+    const legendItem = legend.selectAll("g")
+        .data(legendCategories)
+        .join("g")
+        .attr("transform", (d, index) => `translate(0,${24 + index * 27})`);
+
+    legendItem.append("rect")
+        .attr("class", "network-legend-swatch")
+        .attr("width", 14)
+        .attr("height", 14)
+        .style("fill", ([, color]) => color)
+        .style("fill-opacity", 0.12)
+        .style("stroke", ([, color]) => color);
+
+    legendItem.append("text")
+        .attr("class", "network-legend-label")
+        .attr("x", 24)
+        .attr("y", 11)
+        .text(([category]) => category.toUpperCase());
+
+    const relationshipLegend = legend.append("g")
+        .attr("transform", "translate(225,0)");
+
+    relationshipLegend.append("text")
+        .attr("class", "network-legend-title")
+        .attr("x", 0)
+        .attr("y", 0)
+        .text("RELATIONSHIPS");
+
+    const relationshipLegendItem = relationshipLegend.selectAll("g")
+        .data(Array.from(relationshipColors))
+        .join("g")
+        .attr("transform", (d, index) => `translate(0,${24 + index * 27})`);
+
+    relationshipLegendItem.append("line")
+        .attr("class", "network-legend-edge")
+        .attr("x1", 0)
+        .attr("x2", 18)
+        .attr("y1", 7)
+        .attr("y2", 7)
+        .style("stroke", ([, color]) => color);
+
+    relationshipLegendItem.append("text")
+        .attr("class", "network-legend-label")
+        .attr("x", 28)
+        .attr("y", 11)
+        .text(([relationshipType]) => relationshipType.toUpperCase());
 
     const link = svg.append("g")
         .attr("class", "network-connections")
         .selectAll("line")
         .data(links)
         .join("line")
-        .attr("class", (d) => d.secondary ? "network-connection--secondary" : null);
+        .attr("class", (d) => [
+            d.secondary ? "network-connection--secondary" : null,
+            `network-relationship--${d.relationshipType}`
+        ].filter(Boolean).join(" "))
+        .attr("marker-end", (d) => `url(#network-arrowhead-${d.relationshipType})`)
+        .on("mouseenter", function (event, d) {
+            const sourceId = typeof d.source === "object" ? d.source.id : d.source;
+            const targetId = typeof d.target === "object" ? d.target.id : d.target;
+
+            link
+                .classed("is-highlighted", (edge) => edge === d)
+                .classed("is-dimmed", (edge) => edge !== d);
+
+            node.classed("is-highlighted", (connectedNode) => (
+                connectedNode.id === sourceId || connectedNode.id === targetId
+            ));
+
+            tooltip
+                .text(d.relationship)
+                .attr("aria-hidden", "false")
+                .classed("is-visible", true);
+
+            positionTooltip(event);
+        })
+        .on("mousemove", positionTooltip)
+        .on("mouseleave", function () {
+            link
+                .classed("is-highlighted", false)
+                .classed("is-dimmed", false);
+
+            node.classed("is-highlighted", false);
+
+            hideTooltip();
+        });
 
     const node = svg.append("g")
         .selectAll("g")
@@ -172,13 +241,19 @@
         .join("g")
         .attr("class", (d) => d.central ? "network-node network-node--gcd" : "network-node")
         .attr("role", "group")
-        .attr("aria-label", (d) => [...d.title, ...d.subtitle].join(". "));
+        .attr("aria-label", (d) => [...d.title, ...d.subtitle].join(". "))
+        .on("mouseenter", showNodeTooltip)
+        .on("mousemove", positionTooltip)
+        .on("mouseleave", hideTooltip);
 
     node.append("rect")
         .attr("x", (d) => -d.width / 2)
         .attr("y", (d) => -d.height / 2)
         .attr("width", (d) => d.width)
-        .attr("height", (d) => d.height);
+        .attr("height", (d) => d.height)
+        .style("stroke", (d) => categoryColors.get(d.category))
+        .style("fill", (d) => categoryColors.get(d.category))
+        .style("fill-opacity", (d) => d.central ? 1 : 0.12);
 
     node.each(function (d) {
         const group = d3.select(this);
@@ -288,5 +363,21 @@
             }
         }));
 
-    ticked();
+        ticked();
+    }
+
+    Promise.all([
+        d3.csv("data/actor-network-nodes.csv"),
+        d3.csv("data/actor-network-edges.csv")
+    ])
+        .then(([nodeRows, linkRows]) => {
+            const nodes = nodeRows.map(parseNode);
+            const links = linkRows.map(parseLink);
+
+            renderNetwork(nodes, links);
+        })
+        .catch((error) => {
+            console.error("Unable to load actor network data:", error);
+            container.innerHTML = '<p class="actor-network-fallback">The actor network data could not be loaded.</p>';
+        });
 }());

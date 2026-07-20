@@ -1,0 +1,11 @@
+id,title,abbreviation,subtitle,width,height,targetX,targetY,central,fx,fy,x,y,category,description
+gcd,"[""GENERAL CARTOGRAPHIC"",""DATABASE""]",GCD,"[""Spatial evidence and cartographic interface""]",300,220,800,450,true,800,450,800,450,Central database,Integrates verified spatial evidence into a shared cartographic interface.
+forensic-architecture,"[""FORENSIC ARCHITECTURE""]",,"[""Researchers · Architects"",""OSINT analysts · Legal researchers""]",320,130,430,175,,,,430,175,Human actors,Research team that collects verifies and interprets evidence.
+source-data,"[""SOURCE DATA""]",,"[""Satellite imagery · Open-source media"",""Witness testimony · Humanitarian data""]",300,130,185,430,,,,185,430,Source data,Combines satellite imagery open-source media testimony and humanitarian records.
+verification,"[""VERIFICATION""]",,"[""Geolocation · Chronolocation"",""Cross-referencing""]",250,120,810,125,,,,810,125,Computational methods,Authenticates evidence through geolocation chronolocation and cross-referencing.
+gis,"[""GIS + SPATIAL ANALYSIS""]",,"[""Mapping · Classification"",""Spatial comparison""]",300,120,1200,175,,,,1200,175,Computational methods,Maps classifies and compares evidence across space.
+verified-incidents,"[""VERIFIED INCIDENTS""]",,[],210,90,1090,405,,,,1090,405,Analysis,Records events that meet the project’s verification standards.
+pattern-recognition,"[""PATTERN RECOGNITION""]",,[],280,100,1230,575,,,,1230,575,Analysis,Identifies recurring spatial and temporal relationships across incidents.
+interactive-database,"[""INTERACTIVE DATABASE""]",,[],280,100,610,715,,,,610,715,Outputs,Provides public access to mapped incidents and supporting evidence.
+reports,"[""REPORTS + LEGAL EVIDENCE""]",,[],330,95,1165,760,,,,1165,760,Outputs,Translates analytical findings into reports and legal evidence.
+audiences,"[""AUDIENCES""]",,"[""Courts · Human-rights organisations"",""Researchers · Journalists · Public""]",260,140,1450,700,,,,1450,700,Audiences,Receives evidence in legal research journalistic and public contexts.

@@ -1,0 +1,17 @@
+source,target,secondary,relationship,relationship_type
+source-data,forensic-architecture,,provides evidence to,input
+forensic-architecture,gcd,,produces,production
+verification,gcd,,verifies,analysis
+gis,gcd,,spatially organizes,analysis
+gcd,verified-incidents,,records,production
+verified-incidents,pattern-recognition,,supports,analysis
+gcd,interactive-database,,powers,production
+pattern-recognition,reports,,informs,production
+interactive-database,audiences,,communicates to,communication
+reports,audiences,,communicates to,communication
+forensic-architecture,verification,true,conducts,analysis
+gis,pattern-recognition,true,supports,analysis
+source-data,verification,true,is authenticated by,input
+forensic-architecture,reports,true,authors,production
+gis,interactive-database,true,structures,production
+verified-incidents,reports,true,supports,production
