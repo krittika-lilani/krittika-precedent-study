@@ -31,7 +31,7 @@ nav{
     flex-wrap:wrap;
     justify-content:space-between;
     gap:10px 27px;
-    margin-bottom:72px;
+    margin-bottom:38px;
     padding:0 0 15px;
     border-bottom:2px solid var(--accent);
 }
@@ -287,6 +287,10 @@ tr:last-child td{
     padding:34px;
     background:transparent;
     border:1px solid var(--rule);
+}
+
+.analysis-page > h2:first-of-type + .diagram{
+    margin-top:20px;
 }
 
 .diagram-box{
@@ -572,7 +576,7 @@ tr:last-child td{
 
     nav{
         gap:9px 18px;
-        margin-bottom:48px;
+        margin-bottom:32px;
     }
 
     .home-hero{
